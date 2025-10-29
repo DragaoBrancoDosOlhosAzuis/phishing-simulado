@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  github-phishing-simulado:
+    image: github-phishing-simulado
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: github-phishing-simulado
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - phishing-net
+
+networks:
+  phishing-net:
+    driver: bridge
+    name: phishing-network

